@@ -96,6 +96,9 @@ BEGIN {
     # ... and value 0 doesn't touch them
     trimdots = 1;
 
+    # set to 1 to make the exported file read only
+    read_only = 1;
+
     # change this to your name
     author = ENVIRON["AUTHOR"] != "" ? ENVIRON["AUTHOR"] : "Marc Sherry"
 
@@ -126,6 +129,10 @@ BEGIN {
     preserve = preamble || original
     first = 1;      # true until an event has been found
     max_age_seconds = max_age*24*60*60
+
+    if (read_only) {
+        print("# -*- buffer-read-only: t -*-")
+    }
 
     if (header) {
         print "#+TITLE:      ", title
